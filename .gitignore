@@ -33,12 +33,10 @@ models/*.h5
 models/*.json
 
 # ── Sign Videos (host online separately) ─────────────────────────────────────
-signs/
 signs_backup_before_clean/
 rendered_signs/
 
 # ── Runtime state ─────────────────────────────────────────────────────────────
-runtime/
 
 # ── Backup/temp folders ───────────────────────────────────────────────────────
 backup_demo_20260925_232853/
@@ -55,3 +53,11 @@ avatar_web/node_modules/.vite/
 
 # Large training dataset hosted separately
 /dataset/
+
+# Generated runtime recordings
+runtime/*.wav
+runtime/*.aiff
+runtime/*.bin
+sign_motion/
+avatar_web/public/models/*.glb
+signs/_quarantine_clean_fix/

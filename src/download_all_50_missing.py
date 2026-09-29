@@ -12,7 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CSV_PATH = PROJECT_ROOT / "dataset" / "train_50_classes.csv"
 OUT_DIR = PROJECT_ROOT / "dataset" / "train_landmarks_50"
 
-MAX_WORKERS = 6
+MAX_WORKERS = 8
 
 
 def main():
@@ -45,25 +45,29 @@ def main():
     def dl_file(row):
         remote = str(row["path"]).strip()
         fname = Path(remote).name
-        temp_dir = Path(tempfile.mkdtemp(prefix="kaggle_50_"))
-        try:
-            api.competition_download_file(
-                competition="asl-signs",
-                file_name=remote,
-                path=str(temp_dir),
-                quiet=True
-            )
-            for z in temp_dir.rglob("*.zip"):
-                with zipfile.ZipFile(z, "r") as ref:
-                    ref.extractall(temp_dir)
-            cands = list(temp_dir.rglob(fname))
-            if cands:
-                shutil.move(str(cands[0]), str(OUT_DIR / fname))
-                return True, fname
-        except Exception as e:
-            return False, f"{fname}: {e}"
-        finally:
-            shutil.rmtree(temp_dir, ignore_errors=True)
+        
+        for attempt in range(3):
+            temp_dir = Path(tempfile.mkdtemp(prefix="kaggle_50_"))
+            try:
+                api.competition_download_file(
+                    competition="asl-signs",
+                    file_name=remote,
+                    path=str(temp_dir),
+                    quiet=True
+                )
+                for z in temp_dir.rglob("*.zip"):
+                    with zipfile.ZipFile(z, "r") as ref:
+                        ref.extractall(temp_dir)
+                cands = list(temp_dir.rglob(fname))
+                if cands:
+                    shutil.move(str(cands[0]), str(OUT_DIR / fname))
+                    return True, fname
+            except Exception as e:
+                if attempt == 2:
+                    return False, f"{fname}: {e}"
+                time.sleep(1.5 * (attempt + 1))
+            finally:
+                shutil.rmtree(temp_dir, ignore_errors=True)
         return False, fname
 
     completed = 0

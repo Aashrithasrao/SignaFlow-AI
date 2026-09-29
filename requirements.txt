@@ -1,0 +1,19 @@
+# Core Web & UI
+streamlit>=1.35.0
+
+# Deep Learning & Computer Vision
+tensorflow>=2.15.0
+mediapipe>=0.10.14
+opencv-contrib-python>=4.9.0
+numpy>=1.24.0
+
+# Data Science & Dataset Processing
+pandas>=2.0.0
+scikit-learn>=1.3.0
+pyarrow>=14.0.0
+
+# Speech Processing
+SpeechRecognition>=3.10.0
+
+# Dataset Download
+kaggle>=1.6.0

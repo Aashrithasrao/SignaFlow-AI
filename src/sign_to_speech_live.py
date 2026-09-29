@@ -1,3 +1,4 @@
+import sys
 import json
 import time
 from collections import deque
@@ -9,6 +10,7 @@ import tensorflow as tf
 
 from src.camera_landmarks import CameraLandmarkExtractor
 from src.preprocess_landmarks import normalize_sequence
+from src.scale_invariant_geometry import apply_scale_invariant_corroboration
 
 
 # ============================================================
@@ -28,21 +30,18 @@ RESULT_PATH = RUNTIME_DIR / "sign_result.json"
 SEQUENCE_LENGTH = 32
 FEATURES = 225
 
-CONFIDENCE_THRESHOLD = 0.45
-STABILITY_WINDOW = 6
+CONFIDENCE_THRESHOLD = 0.20
+STABILITY_WINDOW = 3
 
-# Time required without a confident sign before auto-stop
-IDLE_TIMEOUT = 5.0
+# Time required without a confident sign before auto-stop (3 minutes)
+IDLE_TIMEOUT = 180.0
 
 # Same-sign duplicates are blocked by last_committed_sign.
-# This cooldown is only used to ignore very short transition
-# predictions immediately after a word is committed.
-TRANSITION_COOLDOWN = 0.60
+TRANSITION_COOLDOWN = 0.45
 
-# Stronger stability required when changing from one word to another.
-# The first word still uses the original 6/6 rule.
-TRANSITION_WINDOW = 12
-TRANSITION_MIN_COUNT = 10
+# Stability required when changing from one word to another
+TRANSITION_WINDOW = 6
+TRANSITION_MIN_COUNT = 4
 
 CAMERA_INDEX = 0
 
@@ -150,32 +149,24 @@ def normalize_for_model(sequence):
     return normalized
 
 
-def get_prediction(model, sequence):
+def disambiguate_prediction(probabilities, classes, result):
+    return apply_scale_invariant_corroboration(probabilities, classes, result)
+
+
+def get_prediction(model, sequence, classes=None, result=None):
     """
-    Run V3 model prediction.
+    Run model prediction with geometric gesture disambiguation.
     """
+    model_input = normalize_for_model(sequence)
+    model_input = np.expand_dims(model_input, axis=0)
 
-    model_input = normalize_for_model(
-        sequence
-    )
+    probabilities = model.predict(model_input, verbose=0)[0]
 
-    model_input = np.expand_dims(
-        model_input,
-        axis=0,
-    )
+    if classes is not None and result is not None:
+        probabilities = disambiguate_prediction(probabilities, classes, result)
 
-    probabilities = model.predict(
-        model_input,
-        verbose=0,
-    )[0]
-
-    class_index = int(
-        np.argmax(probabilities)
-    )
-
-    confidence = float(
-        probabilities[class_index]
-    )
+    class_index = int(np.argmax(probabilities))
+    confidence = float(probabilities[class_index])
 
     return class_index, confidence
 
@@ -223,9 +214,12 @@ print()
 
 extractor = CameraLandmarkExtractor()
 
-cap = cv2.VideoCapture(
-    CAMERA_INDEX
-)
+if sys.platform == "win32":
+    cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+    if not cap.isOpened():
+        cap = cv2.VideoCapture(CAMERA_INDEX)
+else:
+    cap = cv2.VideoCapture(CAMERA_INDEX)
 
 if not cap.isOpened():
     print("ERROR: Could not open camera.")
@@ -443,11 +437,11 @@ try:
 
             try:
 
-                class_index, confidence = (
-                    get_prediction(
-                        model,
-                        sequence,
-                    )
+                class_index, confidence = get_prediction(
+                    model,
+                    sequence,
+                    classes=classes,
+                    result=result,
                 )
 
                 if (

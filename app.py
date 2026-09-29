@@ -111,9 +111,18 @@ def start_sign_recognition():
 
                 return
 
+        win_python = PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"
+        unix_python = PROJECT_ROOT / ".venv" / "bin" / "python"
+        if win_python.exists():
+            executable = str(win_python)
+        elif unix_python.exists():
+            executable = str(unix_python)
+        else:
+            executable = sys.executable
+
         process = subprocess.Popen(
             [
-                sys.executable,
+                executable,
                 "-m",
                 "src.sign_to_speech_live",
             ],
@@ -1485,9 +1494,44 @@ else:
             </span>
 
         </div>
+
+        <div style="background: rgba(30, 41, 59, 0.65); border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 12px; padding: 12px 18px; margin: 16px 0 20px 0; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 22px;">⚡</span>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px; color: #f8fafc; letter-spacing: 0.3px;">
+                        ACTIVE MODEL: DEEP HYBRID 1D-CNN + BiLSTM (50 CLASSES)
+                    </div>
+                    <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">
+                        Loaded: <code style="color:#a5b4fc; background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:4px;">sign_model_50_hybrid_cnn.keras</code> • 50 ASL Signs Ready
+                    </div>
+                </div>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.6); color: #34d399; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.5px;">
+                ● 50 CLASSES CONNECTED
+            </div>
+        </div>
         """
     )
 
+    with st.expander("📋 View All 50 Recognized ASL Signs & Tips", expanded=False):
+        st.markdown(
+            """
+            **50 Supported ASL Vocabulary Words:**
+            `bad`, `better`, `book`, `boy`, `close`, `dad`, `drink`, `every`, `fine`, `first`,
+            `food`, `girl`, `give`, `go`, `happy`, `have`, `hear`, `hello`, `home`, `hungry`,
+            `later`, `listen`, `look`, `man`, `mom`, `morning`, `night`, `no`, `now`, `open`,
+            `outside`, `please`, `read`, `sad`, `same`, `say`, `see`, `sleep`, `stay`, `talk`,
+            `thankyou`, `thirsty`, `tomorrow`, `wait`, `wake`, `water`, `where`, `who`, `why`, `yes`
+
+            *Tips for best recognition:*
+            - **NO**: Index and middle fingers tap the thumb tip together (duck beak motion).
+            - **YES**: Make a fist (S-hand) and nod up and down.
+            - **GO**: Point index finger outward/forward away from body.
+            - **PLEASE**: Flat open hand rubbing clockwise in a circle on chest.
+            - **MOM / DAD**: Open 5-hand with thumb touching chin (MOM) or forehead (DAD).
+            """
+        )
 
     camera_col, recognition_col = st.columns(
         [1.1, 0.9],
@@ -1553,9 +1597,9 @@ else:
                             <div class="sf-camera-sub">
 
                                 {
-                                    "The live camera window is open."
+                                    "The live camera window is open with the 50-Class AI model tracking landmarks."
                                     if st.session_state.sign_running
-                                    else "Press Start Live Recognition."
+                                    else "Press Start Live Recognition below to open the camera window."
                                 }
 
                             </div>

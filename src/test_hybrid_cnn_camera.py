@@ -16,6 +16,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.camera_landmarks import CameraLandmarkExtractor
 from src.preprocess_landmarks import normalize_sequence
+from src.scale_invariant_geometry import apply_scale_invariant_corroboration
 
 # Model configurations
 MODELS_CONFIG = {
@@ -59,13 +60,14 @@ MODELS_CONFIG = {
         ],
     },
     "4": {
-        "name": "50-Class Full Vocabulary (78.5% Global)",
+        "name": "50-Class Full Vocabulary (Freshly Trained — Sep 29)",
         "model_path": PROJECT_ROOT / "models" / "sign_model_50_hybrid_cnn.keras",
         "classes_path": PROJECT_ROOT / "dataset" / "processed" / "classes.npy",
-        "threshold": 0.45,
+        "threshold": 0.20,   # Lowered: 50-class softmax scores 20-45% for valid signs
         "hints": [
-            "50 WLASL Signs Active",
-            "Requires deliberate, clean signing motion",
+            "50 WLASL Signs Active — freshly trained model",
+            "Hold sign clearly for ~1 second",
+            "Keep hand well-lit and centered in frame",
         ],
     },
 }
@@ -342,87 +344,9 @@ def main():
                 latency_ms = (time.time() - t0) * 1000
 
                 # ====================================================
-                # ANATOMICAL HANDSHAPE DISAMBIGUATION: YES vs NO vs GO
+                # SCALE-INVARIANT 50-CLASS GEOMETRIC CORROBORATION
                 # ====================================================
-                # 1. YES (Fist): Index, Middle, Ring, Pinky all curled tight to palm.
-                # 2. GO  (Pointing): Index extended forward, Middle & Pinky curled to palm.
-                # 3. NO  (Duck Beak): Index & Middle extended together, tapping Thumb.
-                active_hands = [h for h in [result.right_hand_landmarks, result.left_hand_landmarks] if h]
-                if active_hands:
-                    yes_idx = classes.index("yes") if "yes" in classes else -1
-                    no_idx = classes.index("no") if "no" in classes else -1
-                    go_idx = classes.index("go") if "go" in classes else -1
-                    please_idx = classes.index("please") if "please" in classes else -1
-
-                    detected_shape = None  # "fist", "pointing", "duck_beak", "flat_chest"
-                    for hand_lms in active_hands:
-                        try:
-                            # Scale-invariant palm length (wrist 0 to middle MCP 9)
-                            palm_scale = ((hand_lms[9].x - hand_lms[0].x)**2 + (hand_lms[9].y - hand_lms[0].y)**2)**0.5
-                            if palm_scale < 1e-4:
-                                continue
-
-                            # Finger extensions: distance from MCP (base knuckle) to fingertip / palm_scale
-                            index_ext = ((hand_lms[8].x - hand_lms[5].x)**2 + (hand_lms[8].y - hand_lms[5].y)**2)**0.5 / palm_scale
-                            mid_ext = ((hand_lms[12].x - hand_lms[9].x)**2 + (hand_lms[12].y - hand_lms[9].y)**2)**0.5 / palm_scale
-                            pinky_ext = ((hand_lms[20].x - hand_lms[17].x)**2 + (hand_lms[20].y - hand_lms[17].y)**2)**0.5 / palm_scale
-
-                            # Distances to thumb tip (4)
-                            d_index_thumb = ((hand_lms[8].x - hand_lms[4].x)**2 + (hand_lms[8].y - hand_lms[4].y)**2)**0.5 / palm_scale
-                            d_mid_thumb = ((hand_lms[12].x - hand_lms[4].x)**2 + (hand_lms[12].y - hand_lms[4].y)**2)**0.5 / palm_scale
-
-                            # 1. Closed Fist (YES): All fingers curled
-                            if index_ext < 0.68 and mid_ext < 0.68 and pinky_ext < 0.72:
-                                detected_shape = "fist"
-                                break
-
-                            # 2. Pointing Forward / Outward (GO): Index extended, Middle curled
-                            elif index_ext > 0.75 and mid_ext < 0.65 and pinky_ext < 0.70:
-                                detected_shape = "pointing"
-                                break
-
-                            # 3. Duck Beak (NO): Index AND Middle extended together, tapping Thumb tip
-                            elif index_ext > 0.65 and mid_ext > 0.65 and (d_index_thumb < 0.65 or d_mid_thumb < 0.65):
-                                detected_shape = "duck_beak"
-                                break
-
-                            # 4. Flat Hand on Chest (PLEASE): Open palm on chest
-                            elif index_ext > 0.70 and mid_ext > 0.70 and pinky_ext > 0.70 and d_index_thumb > 0.45:
-                                if result.pose_landmarks:
-                                    chin_y = result.pose_landmarks[0].y + 0.08
-                                    if hand_lms[0].y > chin_y:
-                                        detected_shape = "flat_chest"
-                                        break
-                                else:
-                                    detected_shape = "flat_chest"
-                                    break
-                        except Exception:
-                            pass
-
-                    # Apply precise mutually exclusive adjustments:
-                    if detected_shape == "fist" and yes_idx >= 0:
-                        probs[yes_idx] = max(probs[yes_idx] * 2.2, 0.45)
-                        if no_idx >= 0: probs[no_idx] *= 0.15
-                        if go_idx >= 0: probs[go_idx] *= 0.15
-                        probs = probs / np.sum(probs)
-
-                    elif detected_shape == "pointing" and go_idx >= 0:
-                        probs[go_idx] = max(probs[go_idx] * 2.2, 0.45)
-                        if no_idx >= 0: probs[no_idx] *= 0.15
-                        if yes_idx >= 0: probs[yes_idx] *= 0.15
-                        probs = probs / np.sum(probs)
-
-                    elif detected_shape == "duck_beak" and no_idx >= 0:
-                        probs[no_idx] = max(probs[no_idx] * 2.2, 0.45)
-                        if yes_idx >= 0: probs[yes_idx] *= 0.15
-                        if go_idx >= 0: probs[go_idx] *= 0.15
-                        probs = probs / np.sum(probs)
-
-                    elif detected_shape == "flat_chest" and please_idx >= 0:
-                        top3_indices = np.argsort(probs)[::-1][:3]
-                        if probs[please_idx] >= 0.12 or (please_idx in top3_indices):
-                            probs[please_idx] = max(probs[please_idx] * 2.0, 0.45)
-                            probs = probs / np.sum(probs)
+                probs = apply_scale_invariant_corroboration(probs, classes, result)
 
                 top_indices = np.argsort(probs)[::-1][:min(3, len(classes))]
                 top3 = [(classes[idx], float(probs[idx])) for idx in top_indices]
