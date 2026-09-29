@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>SignaFlow AI</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(115, 95, 255, .16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(60, 220, 195, .08),
+            transparent 30%
+        ),
+        #07090d;
+
+    color: #f5f7fa;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+
+    width: min(
+        1280px,
+        calc(100% - 40px)
+    );
+
+    margin: auto;
+
+    padding: 25px 0 80px;
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.nav {
+
+    height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border: 1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    backdrop-filter: blur(25px);
+}
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.logo {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8174ed,
+            #5148a8
+        );
+
+    font-size: 20px;
+}
+
+.brand-name {
+
+    font-weight: 750;
+
+    font-size: 16px;
+}
+
+.brand-sub {
+
+    color: #707783;
+
+    font-size: 8px;
+
+    letter-spacing: .16em;
+
+    margin-top: 3px;
+}
+
+.nav-center {
+
+    display: flex;
+
+    gap: 30px;
+
+    color: #747a85;
+
+    font-size: 11px;
+}
+
+.nav-center span:first-child {
+
+    color: white;
+}
+
+.status {
+
+    color: #7de2d1;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: .1em;
+}
+
+.status-dot {
+
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background: #5eead4;
+
+    box-shadow:
+        0 0 15px #5eead4;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+
+    min-height: 500px;
+
+    margin-top: 35px;
+
+    padding: 65px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.1fr .9fr;
+
+    align-items: center;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.eyebrow {
+
+    color: #9c92ff;
+
+    font-size: 9px;
+
+    letter-spacing: .18em;
+
+    font-weight: 800;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+
+    font-size:
+        clamp(52px, 6vw, 88px);
+
+    line-height: .94;
+
+    letter-spacing: -.065em;
+
+    margin: 0;
+}
+
+.hero h1 span {
+
+    background:
+        linear-gradient(
+            90deg,
+            #a49aff,
+            #6fe2d0
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+
+    max-width: 580px;
+
+    color: #9298a3;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    margin-top: 28px;
+}
+
+.tags {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
+}
+
+.tag {
+
+    padding: 8px 12px;
+
+    border-radius: 99px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    color: #898f9a;
+
+    font-size: 8px;
+
+    letter-spacing: .1em;
+}
+
+
+/* =========================
+   HERO VISUAL
+========================= */
+
+.hero-visual {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 330px;
+
+    position: relative;
+}
+
+.glow {
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(132,115,240,.22),
+            transparent 65%
+        );
+
+    position: absolute;
+}
+
+.hand {
+
+    width: 170px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 70px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(20px);
+
+    z-index: 2;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
+}
+
+
+/* =========================
+   MODE
+========================= */
+
+.section-label {
+
+    margin-top: 45px;
+
+    margin-bottom: 12px;
+
+    color: #747a85;
+
+    font-size: 9px;
+
+    letter-spacing: .18em;
+
+    font-weight: 800;
+}
+
+.modes {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.mode {
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 17px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    padding: 18px 22px;
+
+    color: #aeb3bd;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.mode:hover {
+
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(143,130,255,.4);
+}
+
+.mode.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8174ed,
+            #5d54c4
+        );
+
+    color: white;
+
+    border-color: transparent;
+
+    box-shadow:
+        0 15px 45px
+        rgba(112,96,230,.2);
+}
+
+
+/* =========================
+   WORKSPACE
+========================= */
+
+.workspace {
+
+    margin-top: 50px;
+}
+
+.workspace-head {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 22px;
+}
+
+.workspace-head small {
+
+    color: #9288ff;
+
+    letter-spacing: .15em;
+
+    font-size: 8px;
+
+    font-weight: 800;
+}
+
+.workspace-head h2 {
+
+    margin: 8px 0 0;
+
+    font-size: 31px;
+
+    letter-spacing: -.04em;
+}
+
+.workspace-head h2 span {
+
+    color: #656b76;
+}
+
+.pipeline {
+
+    color: #727985;
+
+    font-size: 8px;
+
+    letter-spacing: .1em;
+}
+
+
+/* =========================
+   PANELS
+========================= */
+
+.panels {
+
+    display: grid;
+
+    grid-template-columns:
+        .9fr 1.1fr;
+
+    gap: 15px;
+}
+
+.panel {
+
+    min-height: 480px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    padding: 25px;
+
+    backdrop-filter: blur(20px);
+}
+
+.panel-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+
+    padding-bottom: 18px;
+}
+
+.panel-label {
+
+    color: #747a85;
+
+    font-size: 8px;
+
+    letter-spacing: .15em;
+
+    font-weight: 800;
+}
+
+.panel-title {
+
+    margin-top: 7px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   MICROPHONE
+========================= */
+
+.mic-area {
+
+    height: 350px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.mic {
+
+    width: 155px;
+    height: 155px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(134,119,240,.22),
+            transparent 67%
+        );
+
+    border:
+        1px solid rgba(134,119,240,.2);
+
+    font-size: 48px;
+}
+
+.mic-text {
+
+    margin-top: 25px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.mic-sub {
+
+    color: #707680;
+
+    max-width: 300px;
+
+    text-align: center;
+
+    line-height: 1.6;
+
+    font-size: 10px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   OUTPUT
+========================= */
+
+.output {
+
+    height: 350px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.output-icon {
+
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+.output-title {
+
+    font-weight: 700;
+
+    font-size: 15px;
+}
+
+.output-sub {
+
+    color: #707680;
+
+    font-size: 10px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+
+    margin-top: 90px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #5f6570;
+
+    font-size: 9px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px) {
+
+    .hero {
+
+        grid-template-columns: 1fr;
+
+        padding: 35px;
+    }
+
+    .nav-center {
+
+        display: none;
+    }
+
+    .panels {
+
+        grid-template-columns: 1fr;
+    }
+
+    .workspace-head {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- NAV -->
+
+    <nav class="nav">
+
+        <div class="brand">
+
+            <div class="logo">
+                🤟
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    SignaFlow
+                </div>
+
+                <div class="brand-sub">
+                    AI COMMUNICATION
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-center">
+
+            <span>Workspace</span>
+
+            <span>Technology</span>
+
+            <span>About</span>
+
+        </div>
+
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            SYSTEM READY
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div>
+
+            <div class="eyebrow">
+                BIDIRECTIONAL SIGN LANGUAGE AI
+            </div>
+
+            <h1>
+
+                Communication
+
+                <br>
+
+                <span>
+                    without barriers.
+                </span>
+
+            </h1>
+
+            <p>
+
+                SignaFlow connects spoken language
+                and sign language through real-time
+                artificial intelligence.
+
+            </p>
+
+
+            <div class="tags">
+
+                <div class="tag">
+                    REAL-TIME AI
+                </div>
+
+                <div class="tag">
+                    LANDMARK ANALYSIS
+                </div>
+
+                <div class="tag">
+                    ASL PROCESSING
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="glow"></div>
+
+            <div class="hand">
+                🤟
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MODE -->
+
+    <div class="section-label">
+        CHOOSE YOUR EXPERIENCE
+    </div>
+
+
+    <div class="modes">
+
+        <div
+            class="mode active"
+            onclick="selectMode('speech')"
+            id="speechMode">
+
+            🎤 &nbsp;
+            SPEECH → SIGN
+
+        </div>
+
+
+        <div
+            class="mode"
+            onclick="selectMode('sign')"
+            id="signMode">
+
+            🤟 &nbsp;
+            SIGN → SPEECH
+
+        </div>
+
+    </div>
+
+
+    <!-- WORKSPACE -->
+
+    <section class="workspace">
+
+        <div class="workspace-head">
+
+            <div>
+
+                <small>
+                    SPEECH TO SIGN
+                </small>
+
+                <h2>
+
+                    Speak naturally.
+
+                    <span>
+                        We'll handle the signs.
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <div class="pipeline">
+
+                VOICE
+                →
+                TEXT
+                →
+                ASL GLOSS
+                →
+                SIGN
+
+            </div>
+
+        </div>
+
+
+        <div class="panels">
+
+
+            <!-- VOICE -->
+
+            <div class="panel">
+
+                <div class="panel-top">
+
+                    <div>
+
+                        <div class="panel-label">
+                            VOICE INPUT
+                        </div>
+
+                        <div class="panel-title">
+                            Ready to listen
+                        </div>
+
+                    </div>
+
+                    <div class="panel-label">
+                        READY
+                    </div>
+
+                </div>
+
+
+                <div class="mic-area">
+
+                    <div class="mic">
+                        🎙️
+                    </div>
+
+                    <div class="mic-text">
+                        Speak your sentence
+                    </div>
+
+                    <div class="mic-sub">
+
+                        SignaFlow will convert
+                        your speech into an
+                        ASL-oriented sequence.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OUTPUT -->
+
+            <div class="panel">
+
+                <div class="panel-top">
+
+                    <div>
+
+                        <div class="panel-label">
+                            SIGN OUTPUT
+                        </div>
+
+                        <div class="panel-title">
+                            Visual sign sequence
+                        </div>
+
+                    </div>
+
+                    <div class="panel-label">
+                        0 SIGNS
+                    </div>
+
+                </div>
+
+
+                <div class="output">
+
+                    <div class="output-icon">
+                        ✨
+                    </div>
+
+                    <div class="output-title">
+                        Your signs appear here
+                    </div>
+
+                    <div class="output-sub">
+
+                        Start speaking to generate
+                        your visual sign sequence.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <span>
+            🤟 SignaFlow AI
+        </span>
+
+        <span>
+            Bidirectional communication intelligence
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+function selectMode(mode) {
+
+    const speech =
+        document.getElementById(
+            "speechMode"
+        );
+
+    const sign =
+        document.getElementById(
+            "signMode"
+        );
+
+    if (mode === "speech") {
+
+        speech.classList.add(
+            "active"
+        );
+
+        sign.classList.remove(
+            "active"
+        );
+
+    } else {
+
+        sign.classList.add(
+            "active"
+        );
+
+        speech.classList.remove(
+            "active"
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

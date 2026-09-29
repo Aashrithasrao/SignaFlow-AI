@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SignaFlow AI — 3D Avatar</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    #162033 0%,
+                    #080b12 45%,
+                    #040509 100%
+                );
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "SF Pro Display",
+                sans-serif;
+            color: white;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+            position: absolute;
+            top: 28px;
+            left: 32px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            font-size: 12px;
+            opacity: 0.55;
+        }
+
+        .status {
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            z-index: 10;
+
+            padding: 10px 15px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 999px;
+
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(18px);
+
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .panel {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            z-index: 10;
+
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 18px;
+
+            background: rgba(10,13,20,0.72);
+            backdrop-filter: blur(20px);
+        }
+
+        button {
+            border: 0;
+            border-radius: 11px;
+
+            padding: 10px 15px;
+
+            background: rgba(255,255,255,0.08);
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .word {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            z-index: 10;
+
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 3px;
+
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .word.show {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <div class="header">
+        <div class="brand">SignaFlow AI</div>
+        <div class="subtitle">
+            Human 3D Sign Avatar Engine
+        </div>
+    </div>
+
+    <div id="status" class="status">
+        Loading avatar…
+    </div>
+
+    <div id="word" class="word"></div>
+
+    <div class="panel">
+        <button onclick="avatarOpen()">OPEN</button>
+        <button onclick="avatarFist()">FIST</button>
+        <button onclick="avatarPoint()">POINT</button>
+        <button onclick="avatarWave()">WAVE</button>
+        <button onclick="avatarWater()">WATER</button>
+        <button onclick="avatarReset()">RESET</button>
+    </div>
+
+</div>
+
+<script type="module" src="/src/main.js"></script>
+
+</body>
+</html>

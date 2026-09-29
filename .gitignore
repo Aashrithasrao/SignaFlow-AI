@@ -1,0 +1,57 @@
+# ── Python ───────────────────────────────────────────────────────────────────
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Env & Secrets ─────────────────────────────────────────────────────────────
+.env
+*.env
+.streamlit/secrets.toml
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+
+# ── Large Dataset Files (DO NOT push — 10 GB of parquet files) ───────────────
+dataset/train_landmarks_50/
+dataset/processed/X.npy
+dataset/processed/y.npy
+dataset/processed/X_train.npy
+dataset/processed/y_train.npy
+dataset/processed/X_val.npy
+dataset/processed/y_val.npy
+dataset/processed/X_backup.npy
+dataset/processed/y_backup.npy
+
+# ── Trained Models (too large for GitHub — use Releases or LFS) ──────────────
+models/*.keras
+models/*.h5
+models/*.json
+
+# ── Sign Videos (host online separately) ─────────────────────────────────────
+signs/
+signs_backup_before_clean/
+rendered_signs/
+
+# ── Runtime state ─────────────────────────────────────────────────────────────
+runtime/
+
+# ── Backup/temp folders ───────────────────────────────────────────────────────
+backup_demo_20260925_232853/
+archive/
+
+# ── Node / frontend ───────────────────────────────────────────────────────────
+avatar_web/node_modules/
+frontend/node_modules/
+avatar_web/node_modules/.vite/
+
+# ── Logs & misc ───────────────────────────────────────────────────────────────
+*.log
+*.tmp
+
+# Large training dataset hosted separately
+/dataset/

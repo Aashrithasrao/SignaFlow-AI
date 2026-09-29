@@ -1,0 +1,971 @@
+/* =========================================================
+   SIGNaflow AI — GLOBAL DESIGN
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #07090d;
+    --panel: #101218;
+    --panel-2: #13151d;
+    --border: rgba(255,255,255,.09);
+    --text: #f5f5f7;
+    --muted: #858b97;
+    --purple: #7567e8;
+    --purple-light: #9b8fff;
+    --cyan: #69d8c7;
+}
+
+html, body, [class*="css"] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.stApp {
+    background:
+        radial-gradient(
+            circle at 12% 8%,
+            rgba(117,103,232,.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 88% 20%,
+            rgba(70,180,170,.07),
+            transparent 28%
+        ),
+        var(--bg);
+    color: var(--text);
+}
+
+/* Hide Streamlit chrome */
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+header {
+    background: transparent !important;
+}
+
+/* Main width */
+.block-container {
+    max-width: 1280px;
+    padding-top: 1.5rem;
+    padding-bottom: 5rem;
+}
+
+/* =========================================================
+   TOP NAV
+   ========================================================= */
+
+.sf-nav {
+    width: 100%;
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 22px;
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.035);
+    backdrop-filter: blur(24px);
+
+    margin-bottom: 32px;
+}
+
+.sf-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sf-logo {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8578f0,
+            #5145b0
+        );
+
+    font-size: 21px;
+
+    box-shadow:
+        0 10px 30px rgba(117,103,232,.22);
+}
+
+.sf-brand-name {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.sf-brand-sub {
+    margin-top: 2px;
+    font-size: 7px;
+    letter-spacing: .18em;
+    color: #707580;
+}
+
+.sf-online {
+    color: var(--cyan);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.sf-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: var(--cyan);
+
+    box-shadow:
+        0 0 14px var(--cyan);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.sf-hero {
+    min-height: 480px;
+
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: center;
+
+    padding: 65px;
+
+    border: 1px solid var(--border);
+    border-radius: 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    overflow: hidden;
+    position: relative;
+}
+
+.sf-eyebrow {
+    color: var(--purple-light);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .18em;
+
+    margin-bottom: 18px;
+}
+
+.sf-hero-title {
+    margin: 0;
+
+    font-size: clamp(52px, 6vw, 86px);
+
+    line-height: .94;
+
+    letter-spacing: -.07em;
+
+    font-weight: 800;
+}
+
+.sf-gradient {
+    background:
+        linear-gradient(
+            90deg,
+            #9b8fff,
+            #72c8ea,
+            #70dcc9
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sf-hero-description {
+    max-width: 600px;
+
+    margin-top: 25px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+.sf-tags {
+    display: flex;
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    margin-top: 25px;
+}
+
+.sf-tag {
+    padding: 8px 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    color: #898f9a;
+
+    font-size: 8px;
+
+    letter-spacing: .11em;
+}
+
+.sf-hero-visual {
+    height: 330px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.sf-glow {
+    position: absolute;
+
+    width: 310px;
+    height: 310px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(117,103,232,.22),
+            transparent 68%
+        );
+}
+
+.sf-hand {
+    position: relative;
+    z-index: 2;
+
+    width: 175px;
+    height: 175px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    font-size: 68px;
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,.4);
+
+    animation: sfFloat 5s ease-in-out infinite;
+}
+
+@keyframes sfFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* =========================================================
+   SECTION LABELS
+   ========================================================= */
+
+.sf-section-label {
+    margin-top: 45px;
+    margin-bottom: 12px;
+
+    color: #747a85;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .18em;
+}
+
+.sf-section-title {
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: -.045em;
+
+    margin-bottom: 20px;
+}
+
+/* =========================================================
+   MODE CARDS
+   ========================================================= */
+
+.sf-mode-card {
+    min-height: 145px;
+
+    padding: 25px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.sf-mode-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(117,103,232,.35);
+}
+
+.sf-mode-active {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(117,103,232,.25),
+            rgba(117,103,232,.07)
+        );
+
+    border-color:
+        rgba(139,126,255,.5);
+
+    box-shadow:
+        0 18px 50px rgba(117,103,232,.10);
+}
+
+.sf-mode-icon {
+    font-size: 24px;
+}
+
+.sf-mode-title {
+    margin-top: 12px;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+.sf-mode-description {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.sf-active-label {
+    margin-top: 13px;
+
+    color: #a99fff;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .13em;
+}
+
+/* =========================================================
+   STREAMLIT BUTTONS
+   ========================================================= */
+
+.stButton > button {
+    width: 100%;
+
+    min-height: 48px;
+
+    border-radius: 13px !important;
+
+    border: 1px solid var(--border) !important;
+
+    background:
+        rgba(255,255,255,.045) !important;
+
+    color: #f1f1f4 !important;
+
+    font-weight: 700 !important;
+
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        border-color .18s ease !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(139,126,255,.45) !important;
+
+    background:
+        rgba(117,103,232,.14) !important;
+}
+
+/* Primary buttons */
+.stButton > button[kind="primary"] {
+    background:
+        linear-gradient(
+            135deg,
+            #8174ed,
+            #5e54c5
+        ) !important;
+
+    border: none !important;
+
+    box-shadow:
+        0 14px 35px rgba(117,103,232,.20);
+}
+
+/* =========================================================
+   WORKSPACE PANELS
+   ========================================================= */
+
+.sf-panel {
+    min-height: 470px;
+
+    padding: 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    backdrop-filter: blur(18px);
+}
+
+.sf-panel-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding-bottom: 17px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+.sf-panel-label {
+    color: #747a85;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .16em;
+}
+
+.sf-panel-title {
+    margin-top: 7px;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+/* =========================================================
+   RECORD / CAMERA AREA
+   ========================================================= */
+
+.sf-center {
+    min-height: 340px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.sf-circle {
+    width: 155px;
+    height: 155px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(117,103,232,.25);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(117,103,232,.20),
+            transparent 68%
+        );
+
+    font-size: 48px;
+
+    box-shadow:
+        0 0 70px rgba(117,103,232,.08);
+}
+
+.sf-center-title {
+    margin-top: 22px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+.sf-center-sub {
+    max-width: 340px;
+
+    margin-top: 8px;
+
+    color: #727985;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   TRANSCRIPT
+   ========================================================= */
+
+.sf-transcript {
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 14px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    color: #c8ccd4;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   SIGN SEQUENCE
+   ========================================================= */
+
+.sf-sequence {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+}
+
+.sf-word {
+    padding: 8px 11px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(117,103,232,.13);
+
+    border:
+        1px solid rgba(117,103,232,.20);
+
+    color: #bcb4ff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .07em;
+}
+
+/* =========================================================
+   VIDEO PLACEHOLDER
+   ========================================================= */
+
+.sf-video {
+    min-height: 260px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151721,
+            #0c0e13
+        );
+
+    color: #646a75;
+
+    text-align: center;
+}
+
+.sf-video-icon {
+    font-size: 36px;
+
+    margin-bottom: 10px;
+}
+
+.sf-video-text {
+    font-size: 10px;
+}
+
+/* =========================================================
+   CAMERA
+   ========================================================= */
+
+.sf-camera {
+    min-height: 350px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(117,103,232,.08),
+            #0b0d12 65%
+        );
+
+    color: #707681;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.sf-camera-grid {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+}
+
+.sf-camera-content {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+}
+
+.sf-camera-icon {
+    font-size: 42px;
+}
+
+/* =========================================================
+   RECOGNITION
+   ========================================================= */
+
+.sf-recognition {
+    margin-top: 15px;
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 16px;
+
+    background:
+        rgba(0,0,0,.18);
+}
+
+.sf-recognized {
+    font-size: 34px;
+
+    font-weight: 800;
+
+    letter-spacing: -.04em;
+
+    color: white;
+}
+
+.sf-confidence {
+    margin-top: 5px;
+
+    color: var(--cyan);
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   TECHNOLOGY / ABOUT
+   ========================================================= */
+
+.sf-page-hero {
+    padding: 70px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(117,103,232,.09),
+            rgba(255,255,255,.02)
+        );
+
+    margin-bottom: 25px;
+}
+
+.sf-page-eyebrow {
+    color: var(--purple-light);
+
+    font-size: 9px;
+
+    letter-spacing: .18em;
+
+    font-weight: 800;
+}
+
+.sf-page-title {
+    margin-top: 15px;
+
+    font-size: clamp(45px, 6vw, 76px);
+
+    line-height: .95;
+
+    letter-spacing: -.06em;
+
+    font-weight: 800;
+}
+
+.sf-page-description {
+    max-width: 700px;
+
+    margin-top: 25px;
+
+    color: var(--muted);
+
+    line-height: 1.8;
+
+    font-size: 14px;
+}
+
+.sf-info-card {
+    padding: 27px;
+
+    min-height: 190px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    margin-bottom: 15px;
+}
+
+.sf-info-number {
+    color: #7567e8;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .15em;
+}
+
+.sf-info-title {
+    margin-top: 13px;
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+.sf-info-text {
+    margin-top: 9px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   PIPELINE
+   ========================================================= */
+
+.sf-pipeline {
+    padding: 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    margin-top: 20px;
+}
+
+.sf-pipeline-step {
+    padding: 17px;
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    text-align: center;
+
+    color: #c8cbd2;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.sf-arrow {
+    text-align: center;
+
+    color: #7567e8;
+
+    padding: 5px;
+
+    font-size: 18px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.sf-footer {
+    margin-top: 80px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    color: #5e646e;
+
+    font-size: 9px;
+
+    display: flex;
+
+    justify-content: space-between;
+}
+
+/* =========================================================
+   SIDEBAR — keep hidden
+   ========================================================= */
+
+[data-testid="stSidebar"] {
+    display: none;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .sf-hero {
+        grid-template-columns: 1fr;
+        padding: 35px;
+    }
+
+    .sf-hero-title {
+        font-size: 54px;
+    }
+
+    .sf-hero-visual {
+        min-height: 240px;
+    }
+
+    .sf-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

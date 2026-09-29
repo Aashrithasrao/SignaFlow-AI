@@ -1,0 +1,12 @@
+{
+  "model_name": "Hybrid 1D-CNN + BiLSTM",
+  "val_loss": 0.805635929107666,
+  "val_accuracy": 0.785274088382721,
+  "weighted_precision": 0.7905211969221505,
+  "weighted_recall": 0.7852740836847226,
+  "weighted_f1": 0.781427811834186,
+  "macro_f1": 0.7812810064758788,
+  "training_time_seconds": 432.19428992271423,
+  "avg_confidence": 0.8037424683570862,
+  "high_confidence_rate": 0.8589036652611093
+}
